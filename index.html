@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pvm OS · 开源TurboWarp伪操作系统</title>
+    <title>Pvm OS · 基于 TurboWarp 的开源伪操作系统</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
     <style>
-        /* ─── Reset & Variables ─── */
         *,
         *::before,
         *::after {
@@ -18,1093 +17,767 @@
         }
 
         :root {
-            --bg-primary: #eef2f7;
-            --glass-bg: rgba(255, 255, 255, 0.25);
-            --glass-border: rgba(255, 255, 255, 0.5);
-            --glass-shadow: 0 8px 32px rgba(0, 20, 50, 0.10);
-            --glass-blur: 24px;
-            --text-primary: #0b1a2f;
-            --text-secondary: #2c3e50;
-            --text-muted: #5a6f84;
-            --accent: #3b6eff;
-            --accent-light: #dce5ff;
-            --accent-gradient: linear-gradient(135deg, #3b6eff 0%, #6c4cff 100%);
-            --glass-shine: rgba(255, 255, 255, 0.6);
-            --border-light: rgba(255, 255, 255, 0.4);
-            --shadow-sm: 0 4px 20px rgba(0, 20, 50, 0.06);
-            --shadow-md: 0 12px 48px rgba(0, 20, 50, 0.12);
-            --shadow-lg: 0 20px 60px rgba(59, 110, 255, 0.30);
-            --radius: 24px;
-            --radius-sm: 14px;
-            --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            --license-bg: rgba(59, 110, 255, 0.06);
-            --license-border: #3b6eff;
-            --feature-bg: rgba(255, 255, 255, 0.15);
-            --feature-hover: rgba(255, 255, 255, 0.3);
-            --about-col-bg: rgba(255, 255, 255, 0.12);
-            --about-col-hover: rgba(255, 255, 255, 0.25);
-            --tag-bg: rgba(255, 255, 255, 0.2);
-            --tag-border: rgba(255, 255, 255, 0.25);
-            --code-bg: rgba(59, 110, 255, 0.10);
-            --badge-bg: rgba(59, 110, 255, 0.15);
-            --badge-color: #3b6eff;
-            --ai-badge-bg: rgba(59, 110, 255, 0.08);
-            --ai-badge-text: var(--text-muted);
-            --glass-glow: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8) 0%, transparent 70%);
-            --changelog-entry-bg: rgba(255, 255, 255, 0.10);
-            --changelog-entry-hover: rgba(255, 255, 255, 0.20);
-            --version-tag-bg: var(--accent-gradient);
-            --version-tag-text: #fff;
+            --bg: #f0f4f9;
+            --glass: rgba(255, 255, 255, 0.58);
+            --glass-soft: rgba(255, 255, 255, 0.35);
+            --glass-border: rgba(255, 255, 255, 0.75);
+            --text: #172433;
+            --text-2: #3d4f61;
+            --text-3: #6b7c8f;
+            --accent: #2f6bff;
+            --accent-grad: linear-gradient(135deg, #2f6bff 0%, #6a4dff 100%);
+            --radius: 18px;
+            --radius-sm: 12px;
+            --shadow: 0 10px 30px rgba(20, 40, 80, 0.08);
+            --shadow-hover: 0 16px 42px rgba(20, 40, 80, 0.13);
+            --line: rgba(23, 36, 51, 0.08);
+            --chip: rgba(47, 107, 255, 0.10);
+            --chip-text: #2f6bff;
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            --ease: 0.28s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --blur: 20px;
         }
 
-        /* 深色主题 */
         body.dark {
-            --bg-primary: #0a1424;
-            --glass-bg: rgba(20, 35, 60, 0.30);
-            --glass-border: rgba(255, 255, 255, 0.08);
-            --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-            --text-primary: #eaf0f8;
-            --text-secondary: #c8d4e6;
-            --text-muted: #8fa0bb;
-            --accent: #6c8cff;
-            --accent-light: #1f2f4a;
-            --accent-gradient: linear-gradient(135deg, #6c8cff 0%, #9a7aff 100%);
-            --glass-shine: rgba(255, 255, 255, 0.05);
-            --border-light: rgba(255, 255, 255, 0.06);
-            --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.3);
-            --shadow-md: 0 12px 48px rgba(0, 0, 0, 0.5);
-            --shadow-lg: 0 20px 60px rgba(108, 140, 255, 0.25);
-            --license-bg: rgba(108, 140, 255, 0.08);
-            --license-border: #6c8cff;
-            --feature-bg: rgba(40, 55, 80, 0.25);
-            --feature-hover: rgba(50, 70, 100, 0.4);
-            --about-col-bg: rgba(30, 45, 70, 0.2);
-            --about-col-hover: rgba(40, 60, 90, 0.35);
-            --tag-bg: rgba(40, 55, 80, 0.3);
-            --tag-border: rgba(255, 255, 255, 0.06);
-            --code-bg: rgba(108, 140, 255, 0.15);
-            --badge-bg: rgba(108, 140, 255, 0.2);
-            --badge-color: #6c8cff;
-            --ai-badge-bg: rgba(108, 140, 255, 0.10);
-            --ai-badge-text: #8fa0bb;
-            --glass-glow: radial-gradient(circle at 30% 30%, rgba(108, 140, 255, 0.15) 0%, transparent 70%);
-            --changelog-entry-bg: rgba(255, 255, 255, 0.04);
-            --changelog-entry-hover: rgba(255, 255, 255, 0.08);
-            --version-tag-bg: var(--accent-gradient);
-            --version-tag-text: #fff;
+            --bg: #0d1726;
+            --glass: rgba(26, 40, 62, 0.55);
+            --glass-soft: rgba(26, 40, 62, 0.32);
+            --glass-border: rgba(255, 255, 255, 0.10);
+            --text: #e9f0f8;
+            --text-2: #bfd0e2;
+            --text-3: #8ba0b8;
+            --accent: #7b98ff;
+            --accent-grad: linear-gradient(135deg, #6f8dff 0%, #9a7aff 100%);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.38);
+            --shadow-hover: 0 16px 42px rgba(0, 0, 0, 0.5);
+            --line: rgba(255, 255, 255, 0.08);
+            --chip: rgba(123, 152, 255, 0.16);
+            --chip-text: #9db4ff;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
             font-family: var(--font);
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
             padding: 0 20px 60px;
             min-height: 100vh;
-            transition: background 0.6s ease, color 0.4s ease;
+            transition: background 0.4s ease, color 0.3s ease;
             background-image:
-                radial-gradient(ellipse at 10% 20%, rgba(59, 110, 255, 0.06) 0%, transparent 60%),
-                radial-gradient(ellipse at 90% 80%, rgba(108, 76, 255, 0.06) 0%, transparent 60%),
-                radial-gradient(ellipse at 50% 50%, rgba(59, 110, 255, 0.03) 0%, transparent 80%);
+                radial-gradient(ellipse 70% 50% at 12% 8%, rgba(47, 107, 255, 0.07), transparent 60%),
+                radial-gradient(ellipse 60% 50% at 88% 92%, rgba(106, 77, 255, 0.07), transparent 60%);
+            background-attachment: fixed;
         }
 
         body.dark {
             background-image:
-                radial-gradient(ellipse at 10% 20%, rgba(108, 140, 255, 0.10) 0%, transparent 60%),
-                radial-gradient(ellipse at 90% 80%, rgba(154, 122, 255, 0.10) 0%, transparent 60%),
-                radial-gradient(ellipse at 50% 50%, rgba(108, 140, 255, 0.05) 0%, transparent 80%);
+                radial-gradient(ellipse 70% 50% at 12% 8%, rgba(111, 141, 255, 0.10), transparent 60%),
+                radial-gradient(ellipse 60% 50% at 88% 92%, rgba(154, 122, 255, 0.10), transparent 60%);
         }
 
         .container {
-            max-width: 1120px;
+            max-width: 1080px;
             margin: 0 auto;
-            padding: 0 16px;
         }
 
-        /* ─── Top Bar ─── */
+        /* ---------- 顶部工具条 ---------- */
         .top-bar {
             position: fixed;
-            top: 24px;
-            right: 24px;
+            top: 20px;
+            right: 20px;
             z-index: 999;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
-        /* 顶部小按钮（保留快速入口） */
-        .top-bar .theme-toggle,
-        .top-bar .download-btn-sm {
-            background: var(--glass-bg);
-            backdrop-filter: blur(var(--glass-blur));
-            -webkit-backdrop-filter: blur(var(--glass-blur));
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--glass-shadow);
-            border-radius: 60px;
-            padding: 8px 16px;
-            display: flex;
+        .pill-btn {
+            display: inline-flex;
             align-items: center;
             gap: 8px;
+            padding: 7px 15px;
+            border-radius: 999px;
+            background: var(--glass);
+            backdrop-filter: blur(var(--blur));
+            -webkit-backdrop-filter: blur(var(--blur));
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow);
+            color: var(--text-2);
+            font-family: var(--font);
             font-size: 0.8rem;
             font-weight: 500;
-            color: var(--text-secondary);
             cursor: pointer;
-            transition: all var(--transition);
-            user-select: none;
             text-decoration: none;
-            font-family: var(--font);
-            position: relative;
-            overflow: hidden;
+            transition: transform var(--ease), box-shadow var(--ease), color var(--ease);
+            user-select: none;
         }
 
-        .top-bar .theme-toggle::before,
-        .top-bar .download-btn-sm::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: var(--glass-glow);
-            opacity: 0;
-            transition: opacity 0.4s;
-            pointer-events: none;
+        .pill-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-hover);
+            color: var(--text);
         }
 
-        .top-bar .theme-toggle:hover::before,
-        .top-bar .download-btn-sm:hover::before {
-            opacity: 1;
-        }
-
-        .top-bar .theme-toggle:hover,
-        .top-bar .download-btn-sm:hover {
-            transform: scale(1.04);
-            box-shadow: var(--shadow-md);
-            border-color: rgba(255, 255, 255, 0.7);
-        }
-
-        .top-bar .download-btn-sm {
-            background: var(--accent-gradient);
+        .pill-btn.accent {
+            background: var(--accent-grad);
             color: #fff;
-            border: none;
-            box-shadow: 0 4px 20px rgba(59, 110, 255, 0.25);
-            padding: 8px 18px;
-            font-weight: 600;
+            border-color: transparent;
         }
 
-        .top-bar .download-btn-sm:hover {
-            filter: brightness(1.08);
-            box-shadow: 0 8px 30px rgba(59, 110, 255, 0.35);
+        .pill-btn.accent:hover {
+            color: #fff;
+            filter: brightness(1.06);
         }
 
-        .top-bar .download-btn-sm svg {
-            width: 16px;
-            height: 16px;
+        .pill-btn svg {
+            width: 15px;
+            height: 15px;
             fill: currentColor;
             flex-shrink: 0;
         }
 
-        .top-bar .theme-toggle .indicator {
-            width: 28px;
-            height: 16px;
-            background: var(--text-muted);
-            border-radius: 30px;
+        .theme-toggle .indicator {
+            width: 26px;
+            height: 15px;
+            background: var(--text-3);
+            border-radius: 999px;
             position: relative;
-            transition: background var(--transition);
             flex-shrink: 0;
+            transition: background var(--ease);
         }
 
-        .top-bar .theme-toggle .indicator::after {
+        .theme-toggle .indicator::after {
             content: '';
             position: absolute;
             top: 2px;
             left: 2px;
-            width: 12px;
-            height: 12px;
-            background: #fff;
+            width: 11px;
+            height: 11px;
             border-radius: 50%;
-            transition: transform var(--transition), background var(--transition);
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+            background: #fff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+            transition: transform var(--ease), background var(--ease);
         }
 
-        body.dark .top-bar .theme-toggle .indicator {
+        body.dark .theme-toggle .indicator {
             background: var(--accent);
         }
 
-        body.dark .top-bar .theme-toggle .indicator::after {
-            transform: translateX(12px);
-            background: #0a1424;
+        body.dark .theme-toggle .indicator::after {
+            transform: translateX(11px);
+            background: #0d1726;
         }
 
-        .top-bar .theme-toggle .label {
-            display: inline-block;
-            min-width: 28px;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* ─── Hero ─── */
+        /* ---------- Hero ---------- */
         .hero {
             text-align: center;
-            padding: 70px 0 30px;
-            position: relative;
+            padding: 88px 0 40px;
         }
 
-        .hero-badge {
-            display: inline-block;
-            background: var(--badge-bg);
-            color: var(--badge-color);
-            font-size: 0.75rem;
+        .hero-kicker {
+            font-size: 0.72rem;
             font-weight: 600;
-            letter-spacing: 0.04em;
-            padding: 6px 22px;
-            border-radius: 100px;
-            margin-bottom: 24px;
+            letter-spacing: 0.18em;
             text-transform: uppercase;
-            border: 1px solid var(--glass-border);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            transition: all var(--transition);
+            color: var(--text-3);
+            margin-bottom: 18px;
         }
 
         .hero h1 {
-            font-size: clamp(2.8rem, 7vw, 5rem);
+            font-size: clamp(2.9rem, 7vw, 4.6rem);
             font-weight: 700;
-            letter-spacing: -0.03em;
-            line-height: 1.1;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 12px;
-            filter: drop-shadow(0 4px 12px rgba(59, 110, 255, 0.2));
+            letter-spacing: -0.035em;
+            line-height: 1.05;
+            color: var(--text);
+            margin-bottom: 14px;
         }
 
         .hero .sub {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            font-weight: 400;
-            max-width: 560px;
-            margin: 0 auto 8px;
-            -webkit-text-fill-color: var(--text-secondary);
+            font-size: 1.12rem;
+            color: var(--text-2);
+            margin-bottom: 6px;
         }
 
         .hero .tagline {
-            font-size: 1rem;
-            color: var(--text-muted);
-            max-width: 500px;
-            margin: 0 auto;
-            font-weight: 400;
-            -webkit-text-fill-color: var(--text-muted);
-        }
-
-        .hero .spirit {
-            margin-top: 32px;
-            display: inline-flex;
-            align-items: center;
-            gap: 14px;
-            background: var(--glass-bg);
-            backdrop-filter: blur(var(--glass-blur));
-            -webkit-backdrop-filter: blur(var(--glass-blur));
-            padding: 12px 32px;
-            border-radius: 100px;
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--glass-shadow);
-            font-weight: 500;
             font-size: 0.95rem;
-            color: var(--text-secondary);
-            transition: all var(--transition);
-            position: relative;
-            overflow: hidden;
+            color: var(--text-3);
+            letter-spacing: 0.02em;
         }
 
-        .hero .spirit::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: var(--glass-glow);
-            opacity: 0.3;
-            pointer-events: none;
+        .spirit {
+            display: inline-block;
+            margin-top: 26px;
+            padding: 9px 26px;
+            border-radius: 999px;
+            background: var(--glass-soft);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            font-size: 0.9rem;
+            color: var(--text-2);
         }
 
-        .hero .spirit span {
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-weight: 700;
-            position: relative;
+        .spirit b {
+            color: var(--text);
+            font-weight: 600;
         }
 
-        /* ─── 大型下载按钮 ─── */
+        /* ---------- 下载区 ---------- */
         .download-hero {
-            margin-top: 36px;
+            margin-top: 34px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 12px;
-            position: relative;
-            z-index: 1;
+            gap: 10px;
         }
 
         .download-btn-large {
             display: inline-flex;
             align-items: center;
-            gap: 16px;
-            background: var(--accent-gradient);
+            gap: 14px;
+            padding: 18px 46px;
+            border-radius: 999px;
+            background: var(--accent-grad);
             color: #fff;
-            border: none;
-            border-radius: 80px;
-            padding: 20px 52px;
-            font-size: 1.3rem;
-            font-weight: 700;
             text-decoration: none;
-            box-shadow: var(--shadow-lg);
-            transition: all var(--transition);
-            cursor: pointer;
-            font-family: var(--font);
-            position: relative;
-            overflow: hidden;
-            letter-spacing: 0.02em;
-        }
-
-        .download-btn-large::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.25) 0%, transparent 70%);
-            opacity: 0.6;
-            transition: opacity 0.5s;
-            pointer-events: none;
-        }
-
-        .download-btn-large::after {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            border-radius: 80px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 0%, transparent 50%, rgba(255, 255, 255, 0.1) 100%);
-            opacity: 0;
-            transition: opacity 0.5s;
-            pointer-events: none;
+            font-size: 1.15rem;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+            box-shadow: 0 14px 34px rgba(47, 107, 255, 0.28);
+            transition: transform var(--ease), box-shadow var(--ease), filter var(--ease);
         }
 
         .download-btn-large:hover {
-            transform: translateY(-4px) scale(1.03);
-            box-shadow: 0 28px 72px rgba(59, 110, 255, 0.40);
-        }
-
-        .download-btn-large:hover::after {
-            opacity: 1;
+            transform: translateY(-3px);
+            box-shadow: 0 20px 46px rgba(47, 107, 255, 0.36);
         }
 
         .download-btn-large:active {
-            transform: scale(0.97);
+            transform: translateY(-1px) scale(0.99);
         }
 
         .download-btn-large svg {
-            width: 28px;
-            height: 28px;
+            width: 24px;
+            height: 24px;
             fill: currentColor;
             flex-shrink: 0;
-            position: relative;
-            z-index: 1;
-        }
-
-        .download-btn-large .btn-text {
-            position: relative;
-            z-index: 1;
         }
 
         .download-btn-large .btn-sub {
-            font-size: 0.7rem;
-            font-weight: 400;
-            opacity: 0.8;
             display: block;
-            letter-spacing: 0.04em;
-            margin-top: 2px;
+            font-size: 0.68rem;
+            font-weight: 400;
+            opacity: 0.82;
+            letter-spacing: 0.03em;
+            margin-top: 1px;
         }
 
         .download-hero .hint {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            font-weight: 400;
-            opacity: 0.7;
-            letter-spacing: 0.02em;
+            font-size: 0.8rem;
+            color: var(--text-3);
         }
 
-        /* ─── Cards ─── */
-        .card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(var(--glass-blur));
-            -webkit-backdrop-filter: blur(var(--glass-blur));
-            border-radius: var(--radius);
-            padding: 40px 44px;
-            margin-bottom: 32px;
+        /* ---------- 官网链接按钮 ---------- */
+        .site-links {
+            margin-top: 28px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .site-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 18px;
+            border-radius: 999px;
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--glass-border);
-            box-shadow: var(--glass-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            transition: all var(--transition);
-            position: relative;
-            overflow: hidden;
+            box-shadow: var(--shadow);
+            color: var(--text-2);
+            font-size: 0.84rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: transform var(--ease), box-shadow var(--ease), color var(--ease);
         }
 
-        .card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: var(--glass-glow);
-            opacity: 0.2;
-            pointer-events: none;
-            transition: opacity 0.6s;
+        .site-link:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+            color: var(--accent);
+        }
+
+        .site-link .arrow {
+            font-size: 0.8rem;
+            opacity: 0.55;
+            transition: transform var(--ease), opacity var(--ease);
+        }
+
+        .site-link:hover .arrow {
+            transform: translateX(2px);
+            opacity: 1;
+        }
+
+        /* ---------- 卡片 ---------- */
+        .card {
+            background: var(--glass);
+            backdrop-filter: blur(var(--blur));
+            -webkit-backdrop-filter: blur(var(--blur));
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 34px 38px;
+            margin-bottom: 24px;
+            transition: box-shadow var(--ease);
         }
 
         .card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-            border-color: rgba(255, 255, 255, 0.6);
-        }
-
-        .card:hover::before {
-            opacity: 0.5;
-        }
-
-        .card::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
-            pointer-events: none;
-            mix-blend-mode: overlay;
-            transition: transform 0.8s ease;
-            transform: rotate(10deg) scale(1);
-        }
-
-        .card:hover::after {
-            transform: rotate(10deg) scale(1.1);
+            box-shadow: var(--shadow-hover);
         }
 
         .card-header {
             display: flex;
-            align-items: center;
-            gap: 14px;
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 1;
+            align-items: baseline;
+            gap: 12px;
+            padding-bottom: 14px;
+            margin-bottom: 18px;
+            border-bottom: 1px solid var(--line);
         }
 
-        .card-header .icon {
-            width: 44px;
-            height: 44px;
-            border-radius: var(--radius-sm);
-            background: var(--accent-gradient);
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            font-weight: 600;
+        .card-header .marker {
+            width: 4px;
+            height: 20px;
+            border-radius: 4px;
+            background: var(--accent-grad);
             flex-shrink: 0;
-            box-shadow: 0 4px 16px rgba(59, 110, 255, 0.25);
-            transition: transform 0.3s;
-        }
-
-        .card:hover .card-header .icon {
-            transform: scale(1.05) rotate(2deg);
+            align-self: center;
         }
 
         .card-header h2 {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: 600;
             letter-spacing: -0.01em;
-            color: var(--text-primary);
+            color: var(--text);
         }
 
-        .card-header h2 .highlight {
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .card-header .meta {
+            margin-left: auto;
+            font-size: 0.75rem;
+            color: var(--text-3);
+            letter-spacing: 0.02em;
         }
 
-        .card p,
-        .card li {
-            color: var(--text-secondary);
-            font-weight: 400;
-            transition: color var(--transition);
-            position: relative;
-            z-index: 1;
+        .card p {
+            color: var(--text-2);
+            font-size: 0.96rem;
         }
 
-        .card p strong {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        /* ─── License Block ─── */
-        .license-box {
-            background: var(--license-bg);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            border-radius: var(--radius-sm);
-            padding: 24px 28px;
-            margin-top: 16px;
-            border-left: 4px solid var(--license-border);
-            font-size: 0.92rem;
-            color: var(--text-secondary);
-            line-height: 1.7;
-            transition: all var(--transition);
-            border: 1px solid var(--glass-border);
-            border-left-width: 4px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .license-box code {
-            background: var(--code-bg);
-            padding: 2px 10px;
-            border-radius: 6px;
-            font-family: 'SF Mono', 'Fira Code', monospace;
-            font-size: 0.85rem;
-            color: var(--accent);
-            transition: background var(--transition), color var(--transition);
-        }
-
-        /* ─── Features Grid ─── */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 18px;
-            margin-top: 20px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .feature-item {
-            background: var(--feature-bg);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            padding: 20px 24px;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--glass-border);
-            transition: all var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-item::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: var(--glass-glow);
-            opacity: 0;
-            transition: opacity 0.4s;
-        }
-
-        .feature-item:hover {
-            background: var(--feature-hover);
-            transform: translateY(-4px) scale(1.01);
-            border-color: rgba(255, 255, 255, 0.5);
-        }
-
-        .feature-item:hover::before {
-            opacity: 0.3;
-        }
-
-        .feature-item .symbol {
-            font-size: 1.5rem;
-            font-weight: 300;
-            color: var(--accent);
-            display: block;
-            margin-bottom: 6px;
-            opacity: 0.7;
-            position: relative;
-        }
-        .feature-item h4 {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 4px;
-            position: relative;
-        }
-        .feature-item p {
-            font-size: 0.88rem;
-            color: var(--text-muted);
-            margin: 0;
-            position: relative;
-        }
-
-        /* ─── About Grid ─── */
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
+        .card p + p {
             margin-top: 12px;
-            position: relative;
-            z-index: 1;
         }
 
-        .about-col {
-            background: var(--about-col-bg);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            padding: 24px 28px;
+        .card strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        /* ---------- 协议块 ---------- */
+        .license-box {
+            background: var(--glass-soft);
+            border-left: 3px solid var(--accent);
             border-radius: var(--radius-sm);
-            border: 1px solid var(--glass-border);
-            transition: all var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .about-col::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: var(--glass-glow);
-            opacity: 0;
-            transition: opacity 0.4s;
-        }
-
-        .about-col:hover {
-            background: var(--about-col-hover);
-            transform: translateY(-3px);
-            border-color: rgba(255, 255, 255, 0.3);
-        }
-
-        .about-col:hover::before {
-            opacity: 0.2;
-        }
-
-        .about-col h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--text-primary);
-            position: relative;
-        }
-        .about-col h3 .badge {
-            font-size: 0.65rem;
-            font-weight: 500;
-            background: var(--badge-bg);
-            color: var(--badge-color);
-            padding: 2px 12px;
-            border-radius: 100px;
-            transition: background var(--transition), color var(--transition);
-        }
-        .about-col p {
-            font-size: 0.94rem;
-            color: var(--text-secondary);
-            margin-bottom: 12px;
-            position: relative;
-        }
-        .about-col .link {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            color: var(--accent);
-            font-weight: 500;
-            text-decoration: none;
+            padding: 22px 24px;
             font-size: 0.9rem;
-            border-bottom: 1.5px solid transparent;
-            transition: all var(--transition);
-            position: relative;
-        }
-        .about-col .link:hover {
-            border-color: var(--accent);
-            transform: translateX(4px);
+            line-height: 1.75;
+            color: var(--text-2);
         }
 
-        /* ─── Account links ─── */
-        .account-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px 24px;
-            margin-top: 16px;
-            padding-top: 16px;
-            border-top: 1px solid var(--glass-border);
-            transition: border-color var(--transition);
-            position: relative;
-            z-index: 1;
-        }
-
-        .account-links .tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: var(--tag-bg);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            padding: 6px 16px;
-            border-radius: 100px;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-            border: 1px solid var(--tag-border);
-            transition: all var(--transition);
-        }
-        .account-links .tag:hover {
-            background: var(--feature-hover);
-            transform: translateY(-2px);
-        }
-        .account-links .tag strong {
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-        .account-links .tag a {
-            color: var(--accent);
-            text-decoration: none;
+        .license-box .copyline {
+            color: var(--text);
             font-weight: 500;
-        }
-        .account-links .tag a:hover {
-            text-decoration: underline;
+            margin-bottom: 10px;
         }
 
-        /* ─── Changelog ─── */
+        /* ---------- 更新日志 ---------- */
         .changelog-tabs {
             display: flex;
-            gap: 12px;
-            margin-bottom: 24px;
-            position: relative;
-            z-index: 1;
             flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
         }
 
         .changelog-tab {
-            padding: 8px 22px;
-            border-radius: 60px;
+            padding: 7px 18px;
+            border-radius: 999px;
             border: 1px solid var(--glass-border);
-            background: var(--glass-bg);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            color: var(--text-secondary);
-            font-weight: 500;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all var(--transition);
+            background: var(--glass-soft);
+            color: var(--text-2);
             font-family: var(--font);
+            font-size: 0.84rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--ease);
         }
 
         .changelog-tab:hover {
-            background: var(--feature-hover);
-            transform: translateY(-2px);
+            color: var(--text);
+            background: var(--glass);
         }
 
         .changelog-tab.active {
-            background: var(--accent-gradient);
-            color: #fff;
+            background: var(--accent-grad);
             border-color: transparent;
-            box-shadow: 0 4px 20px rgba(59, 110, 255, 0.25);
+            color: #fff;
+            box-shadow: 0 6px 18px rgba(47, 107, 255, 0.24);
         }
 
         .changelog-panel {
             display: none;
-            animation: fadeSlideIn 0.4s ease;
         }
 
         .changelog-panel.active {
             display: block;
+            animation: fadeIn 0.3s ease;
         }
 
-        @keyframes fadeSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(12px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .changelog-entry {
-            background: var(--changelog-entry-bg);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
+            border: 1px solid var(--line);
             border-radius: var(--radius-sm);
-            padding: 20px 24px;
-            margin-bottom: 16px;
-            border: 1px solid var(--glass-border);
-            transition: all var(--transition);
-            position: relative;
+            padding: 18px 22px;
+            margin-bottom: 12px;
+            background: var(--glass-soft);
+            transition: border-color var(--ease), background var(--ease);
         }
 
         .changelog-entry:hover {
-            background: var(--changelog-entry-hover);
-            transform: translateX(4px);
+            border-color: var(--glass-border);
+            background: var(--glass);
         }
 
-        .changelog-entry .entry-header {
+        .entry-header {
             display: flex;
             align-items: center;
-            gap: 12px;
             flex-wrap: wrap;
-            margin-bottom: 8px;
+            gap: 10px;
+            margin-bottom: 6px;
         }
 
-        .changelog-entry .version-tag {
+        .version-tag {
             display: inline-block;
-            background: var(--version-tag-bg);
-            color: var(--version-tag-text);
-            font-size: 0.75rem;
+            padding: 1px 12px;
+            border-radius: 999px;
+            background: var(--chip);
+            color: var(--chip-text);
+            font-size: 0.72rem;
             font-weight: 700;
-            padding: 2px 14px;
-            border-radius: 100px;
-            letter-spacing: 0.02em;
+            letter-spacing: 0.03em;
         }
 
-        .changelog-entry .entry-date {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            font-weight: 400;
+        .entry-date {
+            font-size: 0.76rem;
+            color: var(--text-3);
         }
 
-        .changelog-entry .entry-title {
+        .entry-title {
+            font-size: 0.96rem;
             font-weight: 600;
-            color: var(--text-primary);
-            font-size: 1rem;
+            color: var(--text);
         }
 
         .changelog-entry ul {
             list-style: none;
-            padding: 0;
-            margin-top: 8px;
+            margin-top: 6px;
         }
 
-        .changelog-entry ul li {
-            padding: 3px 0 3px 22px;
+        .changelog-entry li {
             position: relative;
-            font-size: 0.92rem;
-            color: var(--text-secondary);
+            padding-left: 16px;
+            font-size: 0.89rem;
+            color: var(--text-2);
+            line-height: 1.75;
         }
 
-        .changelog-entry ul li::before {
-            content: '◆';
+        .changelog-entry li::before {
+            content: '';
             position: absolute;
-            left: 0;
-            color: var(--accent);
-            font-size: 0.65rem;
-            top: 5px;
-            opacity: 0.6;
+            left: 2px;
+            top: 0.72em;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--text-3);
+            opacity: 0.55;
         }
 
-        .changelog-entry ul li.added::before {
-            content: '+';
-            color: #2ecc71;
-            font-weight: 700;
-            font-size: 0.85rem;
+        .changelog-entry li.added::before {
+            background: #29b765;
+            opacity: 1;
         }
 
-        .changelog-entry ul li.fixed::before {
-            content: '◈';
-            color: #f39c12;
+        .changelog-entry li.fixed::before {
+            background: #f0a020;
+            opacity: 1;
         }
 
-        .changelog-entry ul li.enhanced::before {
-            content: '◉';
-            color: var(--accent);
+        .changelog-entry li.enhanced::before {
+            background: var(--accent);
+            opacity: 1;
+        }
+
+        .changelog-entry li .type {
+            color: var(--text-3);
+            font-size: 0.78rem;
+            margin-right: 4px;
         }
 
         .changelog-empty {
             text-align: center;
-            color: var(--text-muted);
-            padding: 40px 0;
-            font-size: 0.95rem;
+            color: var(--text-3);
+            font-size: 0.9rem;
+            padding: 34px 0;
         }
 
-        /* ─── Footer ─── */
+        /* ---------- 关于我们 ---------- */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin-top: 16px;
+        }
+
+        .about-col {
+            border: 1px solid var(--line);
+            border-radius: var(--radius-sm);
+            padding: 22px 24px;
+            background: var(--glass-soft);
+            transition: border-color var(--ease), background var(--ease);
+        }
+
+        .about-col:hover {
+            border-color: var(--glass-border);
+            background: var(--glass);
+        }
+
+        .about-col h3 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .about-col .badge {
+            font-size: 0.64rem;
+            font-weight: 500;
+            padding: 1px 10px;
+            border-radius: 999px;
+            background: var(--chip);
+            color: var(--chip-text);
+        }
+
+        .about-col p {
+            font-size: 0.9rem;
+            color: var(--text-2);
+            line-height: 1.72;
+        }
+
+        .about-col .link {
+            display: inline-block;
+            margin-top: 10px;
+            color: var(--accent);
+            font-size: 0.86rem;
+            font-weight: 500;
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color var(--ease);
+        }
+
+        .about-col .link:hover {
+            border-bottom-color: var(--accent);
+        }
+
+        .account-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 18px;
+            padding-top: 16px;
+            border-top: 1px solid var(--line);
+        }
+
+        .account-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 14px;
+            border-radius: 999px;
+            background: var(--glass-soft);
+            border: 1px solid var(--line);
+            font-size: 0.8rem;
+            color: var(--text-2);
+        }
+
+        .account-chip a {
+            color: var(--accent);
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .account-chip a:hover {
+            text-decoration: underline;
+        }
+
+        /* ---------- 特点网格 ---------- */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 14px;
+            margin-top: 16px;
+        }
+
+        .feature-item {
+            border: 1px solid var(--line);
+            border-radius: var(--radius-sm);
+            padding: 18px 20px;
+            background: var(--glass-soft);
+            transition: border-color var(--ease), background var(--ease), transform var(--ease);
+        }
+
+        .feature-item:hover {
+            border-color: var(--glass-border);
+            background: var(--glass);
+            transform: translateY(-2px);
+        }
+
+        .feature-item h4 {
+            font-size: 0.94rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .feature-item p {
+            font-size: 0.85rem;
+            color: var(--text-3);
+            line-height: 1.65;
+        }
+
+        /* ---------- Footer ---------- */
         .site-footer {
             text-align: center;
-            padding: 28px 0 8px;
-            border-top: 1px solid var(--glass-border);
-            transition: border-color var(--transition), color var(--transition);
-            position: relative;
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-        }
-
-        .site-footer .footer-main {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
-
-        .site-footer .footer-ai {
+            padding: 28px 0 6px;
+            border-top: 1px solid var(--line);
             margin-top: 12px;
+        }
+
+        .site-footer p {
+            font-size: 0.82rem;
+            color: var(--text-3);
+        }
+
+        .site-footer p + p {
+            margin-top: 4px;
+            font-size: 0.78rem;
+        }
+
+        .footer-ai {
             display: inline-block;
-            background: var(--ai-badge-bg);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            color: var(--ai-badge-text);
-            font-size: 0.72rem;
-            font-weight: 400;
-            padding: 4px 18px;
-            border-radius: 100px;
+            margin-top: 12px;
+            padding: 3px 16px;
+            border-radius: 999px;
+            background: var(--glass-soft);
+            border: 1px solid var(--line);
+            font-size: 0.7rem;
+            color: var(--text-3);
             letter-spacing: 0.02em;
-            border: 1px solid var(--glass-border);
-            transition: all var(--transition);
         }
 
-        .site-footer .footer-ai::before {
-            content: '◆ ';
-            opacity: 0.5;
-        }
-
-        /* ─── Responsive ─── */
+        /* ---------- 响应式 ---------- */
         @media (max-width: 820px) {
             .card {
-                padding: 28px 24px;
+                padding: 26px 22px;
             }
             .about-grid {
                 grid-template-columns: 1fr;
             }
             .top-bar {
-                top: 16px;
-                right: 16px;
+                top: 14px;
+                right: 14px;
                 gap: 8px;
-                flex-wrap: wrap;
-                justify-content: flex-end;
-            }
-            .top-bar .theme-toggle {
-                padding: 6px 12px;
-                font-size: 0.75rem;
-            }
-            .top-bar .theme-toggle .indicator {
-                width: 24px;
-                height: 14px;
-            }
-            .top-bar .theme-toggle .indicator::after {
-                width: 10px;
-                height: 10px;
-            }
-            body.dark .top-bar .theme-toggle .indicator::after {
-                transform: translateX(10px);
-            }
-            .top-bar .download-btn-sm {
-                padding: 6px 14px;
-                font-size: 0.75rem;
-            }
-            .top-bar .download-btn-sm svg {
-                width: 14px;
-                height: 14px;
-            }
-            .download-btn-large {
-                padding: 16px 36px;
-                font-size: 1.1rem;
-                gap: 12px;
-            }
-            .download-btn-large svg {
-                width: 22px;
-                height: 22px;
-            }
-            .changelog-tabs {
-                gap: 8px;
-            }
-            .changelog-tab {
-                padding: 6px 16px;
-                font-size: 0.8rem;
             }
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 560px) {
             body {
                 padding: 0 12px 40px;
             }
             .hero {
-                padding: 80px 0 20px;
+                padding: 74px 0 28px;
             }
             .hero h1 {
-                font-size: 2.2rem;
+                font-size: 2.3rem;
+            }
+            .hero .sub {
+                font-size: 0.98rem;
             }
             .card {
                 padding: 22px 18px;
-                border-radius: 18px;
+                border-radius: 16px;
             }
             .card-header h2 {
-                font-size: 1.25rem;
-            }
-            .license-box {
-                padding: 18px 16px;
-                font-size: 0.85rem;
-            }
-            .features-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            .about-col {
-                padding: 18px 16px;
-            }
-            .hero .spirit {
-                font-size: 0.82rem;
-                padding: 8px 18px;
-            }
-            .top-bar {
-                top: 12px;
-                right: 12px;
-                gap: 6px;
-            }
-            .top-bar .theme-toggle {
-                padding: 4px 10px;
-                font-size: 0.7rem;
-                gap: 6px;
-            }
-            .top-bar .theme-toggle .indicator {
-                width: 20px;
-                height: 12px;
-            }
-            .top-bar .theme-toggle .indicator::after {
-                width: 8px;
-                height: 8px;
-                top: 2px;
-                left: 2px;
-            }
-            body.dark .top-bar .theme-toggle .indicator::after {
-                transform: translateX(8px);
-            }
-            .top-bar .download-btn-sm {
-                padding: 4px 10px;
-                font-size: 0.7rem;
-                gap: 4px;
-            }
-            .top-bar .download-btn-sm svg {
-                width: 12px;
-                height: 12px;
+                font-size: 1.15rem;
             }
             .download-btn-large {
-                padding: 14px 28px;
+                padding: 15px 30px;
                 font-size: 1rem;
                 gap: 10px;
-                border-radius: 60px;
             }
             .download-btn-large svg {
                 width: 20px;
                 height: 20px;
             }
-            .download-btn-large .btn-sub {
-                font-size: 0.6rem;
-            }
-            .download-hero .hint {
-                font-size: 0.75rem;
-            }
-            .site-footer .footer-ai {
-                font-size: 0.65rem;
-                padding: 3px 12px;
-            }
-            .changelog-entry {
-                padding: 16px 16px;
-            }
-            .changelog-entry .entry-header {
+            .site-links {
                 gap: 8px;
+                margin-top: 22px;
             }
-            .changelog-tab {
-                padding: 4px 12px;
-                font-size: 0.75rem;
+            .site-link {
+                padding: 7px 14px;
+                font-size: 0.78rem;
+            }
+            .pill-btn {
+                padding: 6px 12px;
+                font-size: 0.74rem;
+            }
+            .features-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .license-box {
+                padding: 18px 16px;
+                font-size: 0.85rem;
             }
         }
 
-        @media (max-width: 380px) {
+        @media (max-width: 400px) {
             .features-grid {
                 grid-template-columns: 1fr;
+            }
+            .top-bar .download-short {
+                display: none;
             }
         }
 
@@ -1115,60 +788,72 @@
             background: transparent;
         }
         ::-webkit-scrollbar-thumb {
-            background: var(--accent);
-            border-radius: 100px;
+            background: var(--text-3);
+            border-radius: 999px;
+            opacity: 0.5;
         }
     </style>
 </head>
 <body>
 
-    <!-- 顶部栏：主题切换 + 小下载按钮（快速入口） -->
+    <!-- 顶部工具条 -->
     <div class="top-bar">
-        <a class="download-btn-sm" href="https://github.com/kaixin-pvm/Pvm-OS/archive/refs/heads/main.zip" download aria-label="下载 Pvm OS 源码">
-            <svg viewBox="0 0 24 24" width="16" height="16"><path d="M5 20h14v-2H5v2zm7-18L5.33 9h3.84v4h3.66V9h3.84L12 2z" transform="rotate(180,12,12)"/></svg>
-            下载
+        <a class="pill-btn accent" href="https://github.com/kaixin-pvm/Pvm-OS/archive/refs/heads/main.zip" download>
+            <svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zm7-18L5.33 9h3.84v4h3.66V9h3.84L12 2z" transform="rotate(180,12,12)"/></svg>
+            <span class="download-short">下载</span>
         </a>
-        <div class="theme-toggle" id="themeToggle" role="button" tabindex="0" aria-label="切换亮色/深色主题">
-            <span class="label" id="themeLabel">亮色</span>
+        <div class="pill-btn theme-toggle" id="themeToggle" role="button" tabindex="0" aria-label="切换主题">
+            <span id="themeLabel">亮色</span>
             <span class="indicator"></span>
         </div>
     </div>
 
     <div class="container">
 
-        <!-- ═══ HERO ═══ -->
+        <!-- Hero -->
         <header class="hero">
-            <div class="hero-badge">◆ 开源 · 共创 · 迭代</div>
+            <p class="hero-kicker">开源 · 共创 · 迭代</p>
             <h1>Pvm OS</h1>
             <p class="sub">基于 TurboWarp 的开源伪操作系统</p>
             <p class="tagline">实用 · 美观 · 高效 · 可拓展</p>
-            <div class="spirit">
-                <span>◆</span> 开源，是世界上最伟大的精神 <span>◆</span>
-            </div>
 
-            <!-- ═══ 大型下载按钮 ═══ -->
+            <div class="spirit">开源，是<strong>世界上最伟大的精神</strong></div>
+
+            <!-- 下载 -->
             <div class="download-hero">
                 <a class="download-btn-large" href="https://github.com/kaixin-pvm/Pvm-OS/archive/refs/heads/main.zip" download>
                     <svg viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zm7-18L5.33 9h3.84v4h3.66V9h3.84L12 2z" transform="rotate(180,12,12)"/></svg>
-                    <span class="btn-text">
+                    <span>
                         下载 Pvm OS 源码
-                        <span class="btn-sub">最新版本 · 完全开源 · MIT 协议</span>
+                        <span class="btn-sub">最新版本 · MIT 协议 · 完全开源</span>
                     </span>
                 </a>
-                <span class="hint">◆ 点击即可下载，免费使用，自由修改 ◆</span>
+                <span class="hint">点击下载，免费使用，自由修改</span>
+            </div>
+
+            <!-- 官网跳转按钮 -->
+            <div class="site-links">
+                <a class="site-link" href="https://pvmos.mysxl.cn" target="_blank" rel="noopener">
+                    Pvm OS 官网 <span class="arrow">→</span>
+                </a>
+                <a class="site-link" href="https://pvmgame.mysxl.cn" target="_blank" rel="noopener">
+                    Pvm 游戏官网 <span class="arrow">→</span>
+                </a>
+                <a class="site-link" href="https://pvmgame.pages.dev" target="_blank" rel="noopener">
+                    Pvm 游戏官网（Pages） <span class="arrow">→</span>
+                </a>
             </div>
         </header>
 
-        <!-- ═══ 开源协议 ═══ -->
+        <!-- 开源协议 -->
         <section class="card">
             <div class="card-header">
-                <div class="icon">◈</div>
+                <span class="marker"></span>
                 <h2>开源协议 · MIT</h2>
+                <span class="meta">LICENSE</span>
             </div>
             <div class="license-box">
-                <p style="font-weight:500; color:var(--text-primary); margin-bottom:8px;">
-                    版权所有 © 2026 Bilibili 爱玩电脑的此电脑（Pvm OS 开发团队）
-                </p>
+                <p class="copyline">版权所有 © 2026 Bilibili 爱玩电脑的此电脑（Pvm OS 开发团队）</p>
                 <p>
                     特此授予任何获得本软件及相关文档文件（以下简称“软件”）副本的人，免费获得许可，
                     不受限制地处理本软件，包括但不限于使用、复制、修改、合并、发布、分发、再许可和/或出售本软件副本的权利，
@@ -1185,332 +870,314 @@
             </div>
         </section>
 
-        <!-- ═══ 更新日志 ═══ -->
+        <!-- 更新日志 -->
         <section class="card">
             <div class="card-header">
-                <div class="icon">◈</div>
+                <span class="marker"></span>
                 <h2>更新日志</h2>
+                <span class="meta">CHANGELOG</span>
             </div>
 
-            <div class="changelog-tabs" id="changelogTabs">
-                <button class="changelog-tab active" data-panel="site">🌐 网站更新</button>
-                <button class="changelog-tab" data-panel="system">⚙️ Pvm OS 系统更新</button>
+            <div class="changelog-tabs">
+                <button class="changelog-tab active" data-panel="site">网站更新</button>
+                <button class="changelog-tab" data-panel="system">Pvm OS 系统更新</button>
             </div>
 
-            <!-- 网站更新面板 -->
-            <div class="changelog-panel active" id="panel-site">
-                <!-- 由 JavaScript 动态渲染 -->
-            </div>
-
-            <!-- 系统更新面板 -->
-            <div class="changelog-panel" id="panel-system">
-                <!-- 由 JavaScript 动态渲染 -->
-            </div>
+            <div class="changelog-panel active" id="panel-site"></div>
+            <div class="changelog-panel" id="panel-system"></div>
         </section>
 
-        <!-- ═══ 关于我们 ═══ -->
+        <!-- 关于我们 -->
         <section class="card">
             <div class="card-header">
-                <div class="icon">♥</div>
+                <span class="marker"></span>
                 <h2>关于我们</h2>
+                <span class="meta">ABOUT US</span>
             </div>
-            <p style="font-size:1.05rem; margin-bottom:16px;">
-                哈喽～欢迎来到我们的小天地！我们是深耕两个平台、主打兴趣与共创的普通玩家，
-                一边在B站分享热爱，一边在共创世界搭建专属美好 ✨
+            <p>
+                欢迎来到我们的小天地。我们是深耕两个平台、主打兴趣与共创的普通玩家，
+                一边在 B 站分享热爱，一边在共创世界搭建属于自己的作品。
             </p>
 
             <div class="about-grid">
                 <div class="about-col">
-                    <h3>
-                        <span>▸</span> B站 · 爱玩电脑的此电脑
-                        <span class="badge">电脑兴趣</span>
-                    </h3>
+                    <h3>B 站 · 爱玩电脑的此电脑 <span class="badge">电脑兴趣</span></h3>
                     <p>
-                        这里是我们的电脑兴趣主战场！账号主打电脑相关内容分享——
-                        不管是电脑基础操作、实用技巧，还是简单系统体验，都会慢慢更新、真诚输出。
+                        这里是我们的电脑兴趣主战场。账号主打电脑相关内容分享——
+                        不管是电脑基础操作、实用技巧，还是简单的系统体验，都会慢慢更新、真诚输出。
                         没有复杂的专业术语，只有通俗易懂的讲解和真实的玩机感受，适合所有喜欢电脑、
-                        想了解电脑的小伙伴，新手也能轻松跟上，一起解锁电脑的更多乐趣。
+                        想了解电脑的小伙伴，新手也能轻松跟上。
                     </p>
-                    <a class="link" href="https://www.bilibili.com" target="_blank" rel="noopener">→ 前往B站关注</a>
+                    <a class="link" href="https://space.bilibili.com/3546740856719844" target="_blank" rel="noopener">前往 B 站关注 →</a>
                 </div>
                 <div class="about-col">
-                    <h3>
-                        <span>▸</span> 共创世界 · 蓝瓶钙
-                        <span class="badge">创意共创</span>
-                    </h3>
+                    <h3>共创世界 · 蓝瓶钙 <span class="badge">创意共创</span></h3>
                     <p>
-                        这是我们的创意共创小空间！以“蓝瓶钙”为标识，在这里我们会和各位小伙伴一起，
-                        搭建专属场景、解锁共创玩法，分享搭建思路、交流创意灵感，不局限于固定模式，
-                        主打一个轻松创作、快乐陪伴，每一份创意都能在这里找到归属，也期待和更多有趣的人一起，
-                        把想象变成现实。
+                        这是我们的创意共创小空间。以“蓝瓶钙”为标识，在这里我们会和各位小伙伴一起，
+                        搭建专属场景、解锁共创玩法，分享搭建思路、交流创意灵感。不局限于固定模式，
+                        主打轻松创作、快乐陪伴，也期待和更多有趣的人一起，把想象变成现实。
                     </p>
-                    <a class="link" href="https://www.ccw.site" target="_blank" rel="noopener">→ 前往共创世界</a>
+                    <a class="link" href="https://www.ccw.site/student/68c52e3afc898317568d7ce5" target="_blank" rel="noopener">前往共创世界 →</a>
                 </div>
             </div>
 
-            <div class="account-links">
-                <span class="tag">◆ B站：<strong><a href="https://space.bilibili.com/3546740856719844" target="_blank" rel="noopener">爱玩电脑的此电脑</a></strong></span>
-                <span class="tag">◆ 共创世界：<strong><a href="https://www.ccw.site/student/68c52e3afc898317568d7ce5" target="_blank" rel="noopener">蓝瓶钙</a></strong></span>
-                <span class="tag" style="background:var(--badge-bg); color:var(--badge-color); border-color:transparent;">
-                    ❤ 期待你的关注和互动
-                </span>
+            <div class="account-row">
+                <span class="account-chip">B 站：<a href="https://space.bilibili.com/3546740856719844" target="_blank" rel="noopener">爱玩电脑的此电脑</a></span>
+                <span class="account-chip">共创世界：<a href="https://www.ccw.site/student/68c52e3afc898317568d7ce5" target="_blank" rel="noopener">蓝瓶钙</a></span>
+                <span class="account-chip">期待你的关注和互动</span>
             </div>
         </section>
 
-        <!-- ═══ 关于 Pvm OS ═══ -->
+        <!-- 关于 Pvm OS -->
         <section class="card">
             <div class="card-header">
-                <div class="icon">◆</div>
-                <h2>关于 <span class="highlight">Pvm OS</span></h2>
+                <span class="marker"></span>
+                <h2>关于 Pvm OS</h2>
+                <span class="meta">ABOUT</span>
             </div>
 
-            <p style="font-size:1.05rem; margin-bottom:20px;">
+            <p>
                 Pvm OS 是一款基于 <strong>TurboWarp</strong> 开发的开源伪操作系统，
-                以 <strong>“实用、美观、高效、可拓展”</strong> 为核心，打破传统伪操作系统的功能局限，
-                兼顾颜值与技术实力，专为热爱系统体验、追求个性化操作的小伙伴打造，
-                既是开源技术的实践成果，也是一款可日常体验、可交流学习的轻量化伪操作系统。
+                以“实用、美观、高效、可拓展”为核心，打破传统伪操作系统的功能局限，
+                兼顾颜值与技术实力，专为热爱系统体验、追求个性化操作的小伙伴打造。
+                它既是开源技术的实践成果，也是一款可日常体验、可交流学习的轻量化伪操作系统。
             </p>
 
-            <h3 style="font-weight:600; font-size:1.1rem; margin:24px 0 12px; color:var(--text-primary);">
-                ◆ 核心特点
-            </h3>
+            <h3 style="margin:22px 0 4px;font-size:1rem;font-weight:600;color:var(--text);">核心特点</h3>
 
             <div class="features-grid">
                 <div class="feature-item">
-                    <span class="symbol">◈</span>
                     <h4>功能丰富全面</h4>
                     <p>内置桌面设置、主题切换、Pvm AI、计算器、时钟等，兼顾实用与趣味。</p>
                 </div>
                 <div class="feature-item">
-                    <span class="symbol">◈</span>
                     <h4>UI 精致美观</h4>
                     <p>简约而不简单，配色舒适、图标统一，窗口动画与过渡细腻顺滑。</p>
                 </div>
                 <div class="feature-item">
-                    <span class="symbol">◈</span>
                     <h4>技术含量突出</h4>
                     <p>基于 TurboWarp 深度优化，模块化架构，代码规范，开源可追溯。</p>
                 </div>
                 <div class="feature-item">
-                    <span class="symbol">◈</span>
                     <h4>轻量 · 开源 · 共创</h4>
                     <p>占用资源少，适配多场景；MIT 开源，欢迎所有人参与迭代升级。</p>
                 </div>
             </div>
 
-            <div style="margin-top:28px; padding-top:20px; border-top:1px solid var(--glass-border); transition: border-color var(--transition); position:relative; z-index:1;">
-                <p style="font-size:0.98rem; color:var(--text-secondary);">
-                    ◆ 开发 Pvm OS 的初衷，既是对 TurboWarp 生态的延伸与实践，也是希望打造一款
-                    <strong>“颜值与实力并存”</strong> 的开源伪操作系统——
-                    不追求复杂的功能堆砌，而是在保证技术可靠性的前提下，让系统既好用、又好看，
-                    同时为开源社区提供一个可学习、可交流、可共创的实践项目。
-                </p>
-                <p style="font-size:0.98rem; color:var(--text-secondary); margin-top:12px;">
-                    ◆ 目前 Pvm OS 仍在持续迭代中，后续会根据用户反馈与开源社区的建议，
-                    新增更多实用功能、优化UI细节、提升运行体验，也期待每一位热爱开源、
-                    喜欢系统体验的小伙伴，一起参与进来，见证 Pvm OS 的成长与进步。
-                </p>
-            </div>
+            <p style="margin-top:22px;">
+                开发 Pvm OS 的初衷，既是对 TurboWarp 生态的延伸与实践，也是希望打造一款“颜值与实力并存”的开源伪操作系统——
+                不追求复杂的功能堆砌，而是在保证技术可靠性的前提下，让系统既好用、又好看，
+                同时为开源社区提供一个可学习、可交流、可共创的实践项目。
+            </p>
+            <p>
+                目前 Pvm OS 仍在持续迭代中，后续会根据用户反馈与开源社区的建议，新增更多实用功能、优化 UI 细节、提升运行体验。
+                也期待每一位热爱开源、喜欢系统体验的小伙伴，一起参与进来，见证 Pvm OS 的成长与进步。
+            </p>
 
-            <div class="account-links" style="border-top-color:var(--glass-border);">
-                <span class="tag">◆ B站：<strong><a href="https://space.bilibili.com/3546740856719844" target="_blank" rel="noopener">爱玩电脑的此电脑</a></strong> <span style="color:var(--text-muted);font-weight:400;">（系统体验分享）</span></span>
-                <span class="tag">◆ 共创世界：<strong><a href="https://www.ccw.site/student/68c52e3afc898317568d7ce5" target="_blank" rel="noopener">蓝瓶钙</a></strong> <span style="color:var(--text-muted);font-weight:400;">（创意交流）</span></span>
+            <div class="account-row">
+                <span class="account-chip">B 站：<a href="https://space.bilibili.com/3546740856719844" target="_blank" rel="noopener">爱玩电脑的此电脑</a>（系统体验分享）</span>
+                <span class="account-chip">共创世界：<a href="https://www.ccw.site/student/68c52e3afc898317568d7ce5" target="_blank" rel="noopener">蓝瓶钙</a>（创意交流）</span>
             </div>
         </section>
 
-        <!-- ═══ Footer ═══ -->
+        <!-- Footer -->
         <footer class="site-footer">
-            <p class="footer-main">
-                © 2026 Pvm OS 开发团队 · 基于 MIT 开源协议 · 用 ◆ 与 ◈ 构建
-            </p>
-            <p class="footer-main" style="margin-top:4px; font-size:0.8rem;">
-                Bilibili 爱玩电脑的此电脑 · 共创世界 蓝瓶钙
-            </p>
+            <p>© 2026 Pvm OS 开发团队 · 基于 MIT 开源协议</p>
+            <p>Bilibili 爱玩电脑的此电脑 · 共创世界 蓝瓶钙</p>
             <span class="footer-ai">本网站由 AI 辅助制作</span>
         </footer>
 
     </div>
 
     <script>
-        (function() {
-            // ─── 主题切换 ───
-            const toggle = document.getElementById('themeToggle');
-            const label = document.getElementById('themeLabel');
-            const body = document.body;
-
-            function getStoredTheme() {
-                return localStorage.getItem('pvm-theme');
-            }
+        (function () {
+            /* 主题切换 */
+            var toggle = document.getElementById('themeToggle');
+            var label = document.getElementById('themeLabel');
+            var body = document.body;
 
             function setTheme(dark) {
-                if (dark) {
-                    body.classList.add('dark');
-                    label.textContent = '深色';
-                } else {
-                    body.classList.remove('dark');
-                    label.textContent = '亮色';
-                }
+                body.classList.toggle('dark', dark);
+                label.textContent = dark ? '深色' : '亮色';
                 localStorage.setItem('pvm-theme', dark ? 'dark' : 'light');
             }
 
-            function initTheme() {
-                const stored = getStoredTheme();
-                if (stored === 'dark') {
-                    setTheme(true);
-                } else if (stored === 'light') {
-                    setTheme(false);
-                } else {
-                    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                    setTheme(prefersDark);
-                }
+            var stored = localStorage.getItem('pvm-theme');
+            if (stored === 'dark') {
+                setTheme(true);
+            } else if (stored === 'light') {
+                setTheme(false);
+            } else {
+                setTheme(window.matchMedia('(prefers-color-scheme: dark)').matches);
             }
 
-            function toggleTheme() {
-                const isDark = body.classList.contains('dark');
-                setTheme(!isDark);
+            function flip() {
+                setTheme(!body.classList.contains('dark'));
             }
 
-            toggle.addEventListener('click', toggleTheme);
-            toggle.addEventListener('keydown', function(e) {
+            toggle.addEventListener('click', flip);
+            toggle.addEventListener('keydown', function (e) {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
-                    toggleTheme();
+                    flip();
                 }
             });
 
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function (e) {
                 if (!localStorage.getItem('pvm-theme')) {
                     setTheme(e.matches);
                 }
             });
 
-            initTheme();
-
-            // ─── ========================================= ───
-            // ─── 更新日志数据 — 在这里修改更新内容！ ───
-            // ─── ========================================= ───
-
-            const changelogData = {
-                // ── 网站更新日志 ──
-                site: [{
-                    version: 'v2.1.1',
-                    date: '2026-08-12',
-                    title: '下载按钮升级',
-                    changes: [
-                        { type: 'added', text: 'Hero 区域新增大型下载按钮，视觉更突出' },
-                        { type: 'enhanced', text: '下载按钮支持悬停光泽动画与按压反馈' },
-                        { type: 'enhanced', text: '顶部保留小型下载按钮作为快速入口' },
-                    ]
-                }, {
-                    version: 'v2.1.0',
-                    date: '2026-08-12',
-                    title: '新增更新日志模块',
-                    changes: [
-                        { type: 'added', text: '新增「网站更新」与「系统更新」双面板切换' },
-                        { type: 'added', text: '所有更新内容支持在代码中直接修改' },
-                        { type: 'enhanced', text: '优化了液态玻璃视觉效果，提升浏览体验' },
-                    ]
-                }, {
-                    version: 'v2.0.0',
-                    date: '2026-08-10',
-                    title: '全面重构 · 液态玻璃设计',
-                    changes: [
-                        { type: 'added', text: '采用液态玻璃（Glassmorphism）风格全面美化' },
-                        { type: 'added', text: '新增亮色/深色主题一键切换' },
-                        { type: 'added', text: '顶部工具栏：下载源码 + 主题切换' },
-                        { type: 'fixed', text: '修复了移动端响应式适配问题' },
-                        { type: 'enhanced', text: '所有卡片悬停增加光泽流动动画' },
-                    ]
-                }, {
-                    version: 'v1.0.0',
-                    date: '2026-08-01',
-                    title: '首次发布 · Pvm OS 品牌页',
-                    changes: [
-                        { type: 'added', text: '品牌形象首页：Hero + 开源协议 + 关于我们' },
-                        { type: 'added', text: 'Pvm OS 核心特点展示（功能/UI/技术/轻量）' },
-                        { type: 'added', text: 'B站 & 共创世界账号跳转链接' },
-                    ]
-                }],
-
-                // ── Pvm OS 系统更新日志 ──
-                system: [{
-                    version: 'v1.0.0',
-                    date: '2026-06-28',
-                    title: 'Pvm OS 初始版本',
-                    changes: [
-                        { type: 'added', text: '基于 TurboWarp 构建的基础伪操作系统' },
-                        { type: 'added', text: '桌面环境 + 窗口移动 + 简易时钟' },
-                        { type: 'added', text: '开源 MIT 协议，代码完全公开' },
-                    ]
-                }]
+            /* =========================================
+               更新日志数据 — 在这里修改内容
+               ========================================= */
+            var changelogData = {
+                site: [
+                    {
+                        version: 'v2.2.0',
+                        date: '2026-08-12',
+                        title: '下载入口升级，新增官网跳转',
+                        changes: [
+                            { type: 'added', text: 'Hero 区域新增大型下载按钮' },
+                            { type: 'added', text: '新增 Pvm OS 官网、Pvm 游戏官网跳转按钮' },
+                            { type: 'enhanced', text: '整体视觉收敛，减少装饰性元素' },
+                            { type: 'enhanced', text: '顶部保留小型下载按钮作为快速入口' }
+                        ]
+                    },
+                    {
+                        version: 'v2.1.0',
+                        date: '2026-08-12',
+                        title: '新增更新日志模块',
+                        changes: [
+                            { type: 'added', text: '新增「网站更新」与「系统更新」双面板切换' },
+                            { type: 'added', text: '所有更新内容支持在代码中直接修改' },
+                            { type: 'enhanced', text: '优化玻璃质感与可读性' }
+                        ]
+                    },
+                    {
+                        version: 'v2.0.0',
+                        date: '2026-08-10',
+                        title: '全面重构 · 液态玻璃设计',
+                        changes: [
+                            { type: 'added', text: '采用液态玻璃（Glassmorphism）风格全面美化' },
+                            { type: 'added', text: '新增亮色 / 深色主题一键切换' },
+                            { type: 'added', text: '顶部工具栏：下载源码 + 主题切换' },
+                            { type: 'fixed', text: '修复移动端响应式适配问题' }
+                        ]
+                    },
+                    {
+                        version: 'v1.0.0',
+                        date: '2026-08-01',
+                        title: '首次发布 · Pvm OS 品牌页',
+                        changes: [
+                            { type: 'added', text: '品牌形象首页：Hero + 开源协议 + 关于我们' },
+                            { type: 'added', text: 'Pvm OS 核心特点展示' },
+                            { type: 'added', text: 'B 站 & 共创世界账号跳转链接' }
+                        ]
+                    }
+                ],
+                system: [
+                    {
+                        version: 'v1.2.0',
+                        date: '2026-08-11',
+                        title: '新增 Pvm AI 助手',
+                        changes: [
+                            { type: 'added', text: '集成 Pvm AI 智能对话助手' },
+                            { type: 'added', text: '新增系统内置计算器工具' },
+                            { type: 'enhanced', text: '优化桌面右键菜单交互逻辑' },
+                            { type: 'fixed', text: '修复窗口拖拽时的闪烁问题' }
+                        ]
+                    },
+                    {
+                        version: 'v1.1.0',
+                        date: '2026-08-05',
+                        title: '主题系统 & 性能优化',
+                        changes: [
+                            { type: 'added', text: '支持亮色 / 深色主题切换' },
+                            { type: 'enhanced', text: '基于 TurboWarp 深度优化，启动速度提升 30%' },
+                            { type: 'fixed', text: '修复窗口缩放时的边缘锯齿' },
+                            { type: 'fixed', text: '修复部分场景下图标显示异常' }
+                        ]
+                    },
+                    {
+                        version: 'v1.0.0',
+                        date: '2026-07-20',
+                        title: 'Pvm OS 初始版本',
+                        changes: [
+                            { type: 'added', text: '基于 TurboWarp 构建的基础伪操作系统' },
+                            { type: 'added', text: '桌面环境 + 基础窗口管理' },
+                            { type: 'added', text: '内置文件管理器（简易版）' },
+                            { type: 'added', text: '系统设置面板（基础）' },
+                            { type: 'added', text: '开源 MIT 协议，代码完全公开' }
+                        ]
+                    }
+                ]
             };
 
-            // ─── 渲染更新日志 ───
+            var typeLabel = {
+                added: '新增',
+                fixed: '修复',
+                enhanced: '优化'
+            };
+
             function renderChangelog(panelId, entries) {
-                const panel = document.getElementById(panelId);
+                var panel = document.getElementById(panelId);
                 if (!panel) return;
 
-                if (!entries || entries.length === 0) {
-                    panel.innerHTML = `<div class="changelog-empty">暂无更新记录</div>`;
+                if (!entries || !entries.length) {
+                    panel.innerHTML = '<div class="changelog-empty">暂无更新记录</div>';
                     return;
                 }
 
-                let html = '';
-                entries.forEach(entry => {
-                    const typeMap = {
-                        'added': '新增',
-                        'fixed': '修复',
-                        'enhanced': '优化'
-                    };
-                    let changesHtml = '';
-                    if (entry.changes && entry.changes.length > 0) {
-                        changesHtml = '<ul>';
-                        entry.changes.forEach(change => {
-                            const typeLabel = typeMap[change.type] || '更新';
-                            changesHtml += `<li class="${change.type || ''}">${typeLabel}：${change.text}</li>`;
+                var html = '';
+                entries.forEach(function (entry) {
+                    var listHtml = '';
+                    if (entry.changes && entry.changes.length) {
+                        listHtml = '<ul>';
+                        entry.changes.forEach(function (c) {
+                            var t = c.type || '';
+                            var labelText = typeLabel[t] || '更新';
+                            listHtml += '<li class="' + t + '"><span class="type">' + labelText + '</span>' + c.text + '</li>';
                         });
-                        changesHtml += '</ul>';
+                        listHtml += '</ul>';
                     }
-                    html += `
-                        <div class="changelog-entry">
-                            <div class="entry-header">
-                                <span class="version-tag">${entry.version}</span>
-                                <span class="entry-date">${entry.date}</span>
-                                <span class="entry-title">${entry.title}</span>
-                            </div>
-                            ${changesHtml}
-                        </div>
-                    `;
+                    html +=
+                        '<div class="changelog-entry">' +
+                            '<div class="entry-header">' +
+                                '<span class="version-tag">' + entry.version + '</span>' +
+                                '<span class="entry-date">' + entry.date + '</span>' +
+                                '<span class="entry-title">' + entry.title + '</span>' +
+                            '</div>' +
+                            listHtml +
+                        '</div>';
                 });
-
                 panel.innerHTML = html;
             }
 
-            // ─── 初始化渲染 ───
             renderChangelog('panel-site', changelogData.site);
             renderChangelog('panel-system', changelogData.system);
 
-            // ─── Tab 切换 ───
-            const tabs = document.querySelectorAll('.changelog-tab');
-            const panels = {
+            /* Tab 切换 */
+            var tabs = document.querySelectorAll('.changelog-tab');
+            var panels = {
                 site: document.getElementById('panel-site'),
-                system: document.getElementById('panel-system'),
+                system: document.getElementById('panel-system')
             };
 
-            tabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    tabs.forEach(t => t.classList.remove('active'));
-                    this.classList.add('active');
-
-                    Object.values(panels).forEach(p => p.classList.remove('active'));
-
-                    const target = this.dataset.panel;
+            tabs.forEach(function (tab) {
+                tab.addEventListener('click', function () {
+                    tabs.forEach(function (t) { t.classList.remove('active'); });
+                    tab.classList.add('active');
+                    Object.keys(panels).forEach(function (k) {
+                        panels[k].classList.remove('active');
+                    });
+                    var target = tab.dataset.panel;
                     if (panels[target]) {
                         panels[target].classList.add('active');
                     }
                 });
             });
-
         })();
     </script>
 
