@@ -281,20 +281,36 @@
             color: var(--text-3);
         }
 
-        /* ---------- 官网链接按钮 ---------- */
+        /* ---------- 官网链接（按站点分组） ---------- */
         .site-links {
-            margin-top: 28px;
+            margin-top: 30px;
             display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .site-group {
+            display: flex;
+            align-items: center;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
+        }
+
+        .site-group-label {
+            font-size: 0.72rem;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            color: var(--text-3);
+            padding-right: 2px;
         }
 
         .site-link {
             display: inline-flex;
             align-items: center;
-            gap: 7px;
-            padding: 8px 18px;
+            gap: 6px;
+            padding: 7px 16px;
             border-radius: 999px;
             background: var(--glass);
             backdrop-filter: blur(12px);
@@ -302,7 +318,7 @@
             border: 1px solid var(--glass-border);
             box-shadow: var(--shadow);
             color: var(--text-2);
-            font-size: 0.84rem;
+            font-size: 0.82rem;
             font-weight: 500;
             text-decoration: none;
             transition: transform var(--ease), box-shadow var(--ease), color var(--ease);
@@ -315,7 +331,7 @@
         }
 
         .site-link .arrow {
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             opacity: 0.55;
             transition: transform var(--ease), opacity var(--ease);
         }
@@ -323,6 +339,20 @@
         .site-link:hover .arrow {
             transform: translateX(2px);
             opacity: 1;
+        }
+
+        /* 当前页面标签（不可点击） */
+        .site-link.current {
+            cursor: default;
+            color: var(--text-3);
+            box-shadow: none;
+            background: var(--glass-soft);
+        }
+
+        .site-link.current:hover {
+            transform: none;
+            box-shadow: none;
+            color: var(--text-3);
         }
 
         /* ---------- 卡片 ---------- */
@@ -752,12 +782,14 @@
                 height: 20px;
             }
             .site-links {
-                gap: 8px;
-                margin-top: 22px;
+                gap: 10px;
+            }
+            .site-group {
+                gap: 6px;
             }
             .site-link {
-                padding: 7px 14px;
-                font-size: 0.78rem;
+                padding: 6px 13px;
+                font-size: 0.77rem;
             }
             .pill-btn {
                 padding: 6px 12px;
@@ -831,17 +863,27 @@
                 <span class="hint">点击下载，免费使用，自由修改</span>
             </div>
 
-            <!-- 官网跳转按钮 -->
+            <!-- 官网链接：按站点分组 -->
             <div class="site-links">
-                <a class="site-link" href="https://pvmos.mysxl.cn" target="_blank" rel="noopener">
-                    Pvm OS 官网 <span class="arrow">→</span>
-                </a>
-                <a class="site-link" href="https://pvmgame.mysxl.cn" target="_blank" rel="noopener">
-                    Pvm 游戏官网 <span class="arrow">→</span>
-                </a>
-                <a class="site-link" href="https://pvmgame.pages.dev" target="_blank" rel="noopener">
-                    Pvm 游戏官网（Pages） <span class="arrow">→</span>
-                </a>
+                <!-- 系统官网 -->
+                <div class="site-group">
+                    <span class="site-group-label">系统官网</span>
+                    <a class="site-link" href="https://pvmos.mysxl.cn" target="_blank" rel="noopener">
+                        上线版 <span class="arrow">→</span>
+                    </a>
+                    <span class="site-link current">Cloudflare 版（当前页面）</span>
+                </div>
+
+                <!-- 游戏官网 -->
+                <div class="site-group">
+                    <span class="site-group-label">游戏官网</span>
+                    <a class="site-link" href="https://pvmgame.mysxl.cn" target="_blank" rel="noopener">
+                        上线版 <span class="arrow">→</span>
+                    </a>
+                    <a class="site-link" href="https://pvmgame.pages.dev" target="_blank" rel="noopener">
+                        Cloudflare 版 <span class="arrow">→</span>
+                    </a>
+                </div>
             </div>
         </header>
 
@@ -1035,12 +1077,21 @@
             var changelogData = {
                 site: [
                     {
+                        version: 'v2.3.0',
+                        date: '2026-09-06',
+                        title: '官网链接分组，明确部署版本',
+                        changes: [
+                            { type: 'added', text: '新增系统官网、游戏官网链接，按站点分组展示' },
+                            { type: 'added', text: '标注各站点的上线版与 Cloudflare 版' },
+                            { type: 'enhanced', text: '当前页面（系统官网 Cloudflare 版）标注为「当前页面」' }
+                        ]
+                    },
+                    {
                         version: 'v2.2.0',
                         date: '2026-08-12',
-                        title: '下载入口升级，新增官网跳转',
+                        title: '下载入口升级，去除装饰元素',
                         changes: [
                             { type: 'added', text: 'Hero 区域新增大型下载按钮' },
-                            { type: 'added', text: '新增 Pvm OS 官网、Pvm 游戏官网跳转按钮' },
                             { type: 'enhanced', text: '整体视觉收敛，减少装饰性元素' },
                             { type: 'enhanced', text: '顶部保留小型下载按钮作为快速入口' }
                         ]
